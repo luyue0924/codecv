@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import navMenu from './nav.vue'
-import Reward from '@/components/reward.vue'
 import ThemeToggle from '@/components/themeToggle.vue'
-import { wOpen } from '@/utils'
-import { useSwitch } from '@/common/global'
 import { useFile } from './hook'
-import Contact from '@/components/contact.vue'
-import ExportTotal from '@/components/exportTotal.vue'
+import { ref, watch } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
+import useEditorStore from '@/store/modules/editor'
 
 const emit = defineEmits([
   'download-dynamic',
@@ -17,7 +15,14 @@ const emit = defineEmits([
 ])
 
 const { exportFile, importFile, fileName } = useFile(emit)
-const { open, toggle } = useSwitch()
+
+const saved = ref(false)
+const editorStore = useEditorStore()
+const showSaved = useDebounceFn(() => {
+  saved.value = true
+  setTimeout(() => (saved.value = false), 2000)
+}, 800)
+watch(() => editorStore.MDContent, showSaved)
 </script>
 
 <template>
@@ -31,22 +36,12 @@ const { open, toggle } = useSwitch()
       @import-md="importFile"
       @export-picture="exportFile('picture')"
     />
-    <ExportTotal />
-    <Reward />
-    <button class="exporter server-export btn" @click="exportFile('dynamic')">导出PDF</button>
-    <button class="exporter local-export btn" @click="exportFile('native')">备用导出</button>
+    <span class="save-status" :class="{ visible: saved }">✓ 已自动保存</span>
+    <button class="exporter local-export btn" @click="exportFile('native')">导出简历</button>
     <div class="operator">
-      <i
-        class="iconfont icon-github github font-25"
-        @click="wOpen('https://github.com/acmenlei/markdown-resume-to-pdf')"
-      ></i>
-      <el-tooltip content="问题反馈" placement="bottom-end">
-        <i class="iconfont icon-comment problem font-25" @click="toggle"></i>
-      </el-tooltip>
       <theme-toggle />
     </div>
   </div>
-  <Contact :open="open" @toggle="toggle" />
 </template>
 
 <style lang="scss" scoped>
@@ -91,6 +86,17 @@ const { open, toggle } = useSwitch()
     }
     &:hover {
       opacity: 0.8;
+    }
+  }
+  .save-status {
+    font-size: 12px;
+    color: #67c23a;
+    font-weight: normal;
+    margin-right: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    &.visible {
+      opacity: 1;
     }
   }
   .problem,

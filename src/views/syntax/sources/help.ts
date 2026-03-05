@@ -152,31 +152,4 @@ lang="HTML"
 theme="dark"
 class="tb-pre"
 ><div style="width:2.5em" class="tb-code-line-number-bg"></div><div class="tb-code-content"><div class="tb-code-line">&lt;<span class="tb-hl-tag">i&nbsp;</span><span class="tb-hl-attr-name">class</span>="<span class="tb-hl-attr-value">iconfont icon-github</span>"&gt;&lt;/<span class="tb-hl-tag">i</span>&gt;</div></div><span class="tb-pre-lang">HTML</span></pre>
-<h2 style="background:var(--background); color: var(--font-color); margin: 20px 0 10px 0;">
-<span style="color: var(--font-color); background:(--background)">over</span>
-</h2>
-<p style="background:var(--background); color: var(--font-color)">
-<span style="line-height: 28px"
-  ><span style="color: var(--font-color); background:(--background)"
-    >以上就是该简历所支持的一些特殊语法，其他的语法与 原生</span
-  ><code
-    style="
-      font-family: 'Microsoft YaHei Mono', Menlo, Monaco, Consolas, 'Courier New', monospace;
-      color: rgb(229, 61, 14);
-    "
-    >Markdown</code
-  ><span style="color: var(--font-color); background:(--background)"
-    >&nbsp;同步，<strong>如果你有不错的想法</strong>，可以向我提出，</span
-  ><code
-    style="
-      font-family: 'Microsoft YaHei Mono', Menlo, Monaco, Consolas, 'Courier New', monospace;
-      color: rgb(229, 61, 14);
-    "
-    >欢迎给这个项目提供不同的简历模板</code
-  ><span style="color: var(--font-color); background:(--background)"
-    >，感谢.&nbsp;<a target="null" href="https://github.com/acmenlei/markdown-resume-to-pdf"
-      >仓库地址</a
-    ></span
-  ></span
->
-</p>`
+`

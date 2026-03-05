@@ -1,19 +1,12 @@
 <script setup lang="ts">
-import Logo from '@/components/logo.vue'
-import User from './components/user.vue'
-import Nav from './components/nav.vue'
-import NavMoblie from './components/navMoblie.vue'
+import ThemeToggle from '@/components/themeToggle.vue'
 </script>
 
 <template>
   <div class="header-out noto-sans-sc">
     <div class="header">
-      <Logo />
-      <Nav />
-      <User />
-    </div>
-    <div class="header-800">
-      <NavMoblie />
+      <span class="site-name" @click="$router.push('/template')">简历工具</span>
+      <ThemeToggle />
     </div>
   </div>
 </template>
@@ -36,11 +29,15 @@ import NavMoblie from './components/navMoblie.vue'
     display: flex;
     justify-content: space-between;
     align-items: center;
-    text-align: center;
+    padding: 0 20px;
   }
 
-  .header-800 {
-    display: none;
+  .site-name {
+    font-size: 18px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 

@@ -37,7 +37,8 @@ const useEditorStore = defineStore('editorStore', {
       this.MDContent = nv
       // 处理之后的操作
       if (!nv) return
-      setLocalStorage(`${MARKDOWN_CONTENT}-${resumeType}`, nv)
+      // 保存365天
+      setLocalStorage(`${MARKDOWN_CONTENT}-${resumeType}`, nv, 1000 * 60 * 60 * 24 * 365)
     },
     // 切换编辑模式
     setWritableMode(originHTML: HTMLElement) {

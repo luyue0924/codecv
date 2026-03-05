@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useGiteeRepoStars, useRecentTemplate, useTypeNet, useUserComments } from './hook'
+import { useRecentTemplate, useTypeNet, useUserComments } from './hook'
 import Header from './components/header.vue'
-import Presentation from './components/presentation.vue'
 import { useDark } from '@vueuse/core'
 import { templates } from '@/templates/config'
 
@@ -10,17 +9,12 @@ const isDark = useDark()
 useTypeNet()
 useRecentTemplate()
 const { comments } = useUserComments()
-const { repoStars, createAnimateEffect } = useGiteeRepoStars()
 </script>
 
 <template>
-  <div class="tip">
-    您正在访问备用网址，请前往主站获取更加完善的功能及简历模板
-    <a class="pointer hover" href="https://wuxiancv.com">点击访问</a>
-  </div>
   <div id="home">
     <Header />
-    <div class="introduce flex flex-space-around flex-align-around flex-align-center noto-sans-sc">
+    <div class="introduce flex flex-align-center noto-sans-sc">
       <div class="introduce-l" data-aos="fade-right">
         <div class="typenet-text"></div>
         <button
@@ -29,9 +23,6 @@ const { repoStars, createAnimateEffect } = useGiteeRepoStars()
         >
           快速开始 <i class="iconfont icon-goto"></i>
         </button>
-      </div>
-      <div class="introduce-r">
-        <Presentation />
       </div>
     </div>
 
@@ -140,6 +131,8 @@ const { repoStars, createAnimateEffect } = useGiteeRepoStars()
     );
     .introduce-l {
       z-index: 2;
+      margin: 0 auto;
+      text-align: center;
       .typenet-text {
         width: 500px;
         height: 300px;

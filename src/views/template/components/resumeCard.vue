@@ -11,25 +11,24 @@ const edit = (type: string) => {
 </script>
 
 <template>
-  <div class="resume-card" data-aos="zoom-in">
+  <div class="resume-card" data-aos="zoom-in" @click="edit(theme.type)">
     <p class="template-hot" v-show="theme.hot">
       <i class="iconfont icon-hot font-20"></i> {{ theme.hot }}
     </p>
-    <div @click="edit(theme.type)">
-      <img :src="theme.img" loading="lazy" />
+    <div class="card-body">
+      <span class="template-name">{{ theme.name }}</span>
       <div class="resume-card-mask">
         <button class="btn center pointer">使用模板</button>
       </div>
-      {{ theme.name }}
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .resume-card {
-  margin: 5px 20px 80px 0;
+  margin: 5px 20px 20px 0;
   width: 185px;
-  height: 240px;
+  height: 100px;
   position: relative;
   text-align: center;
   transition: transform 0.4s;
@@ -48,16 +47,28 @@ const edit = (type: string) => {
     }
   }
 
-  img {
+  .card-body {
     width: 100%;
     height: 100%;
-    border-radius: 5px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: var(--background);
+
+    .template-name {
+      font-size: 13px;
+      padding: 10px;
+      line-height: 1.4;
+    }
   }
 
   .resume-card-mask {
-    border-radius: 5px;
+    border-radius: 8px;
     position: absolute;
-    height: calc(100% + 25px);
+    height: 100%;
     width: 100%;
     top: 0;
     left: 0;
@@ -72,7 +83,7 @@ const edit = (type: string) => {
   }
 
   &:hover {
-    transform: translateY(10px);
+    transform: translateY(-4px);
     .resume-card-mask {
       display: block;
     }
