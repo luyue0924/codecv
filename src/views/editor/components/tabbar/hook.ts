@@ -9,6 +9,7 @@ export const CUSTOM_CSS_STYLE = 'custom-css-style',
   CUSTOM_MARKDOWN_PRIMARY_COLOR = 'custom-markdown-primary-color',
   CUSTOM_MARKDOWN_PRIMARY_BG_COLOR = 'custom_markdown_primary_bg_color',
   MARKDOWN_FONT = 'markdown-font',
+  MARKDOWN_FONT_SIZE = 'markdown-font-size',
   ADJUST_RESUME_MARGIN_TOP = 'ADJUST_RESUME_MARGIN_TOP',
   AUTO_ONE_PAGE = 'auto-one-page',
   WHITE_SPACE = 'white-space',
@@ -194,12 +195,57 @@ export function useCustomFont(resumeType: string) {
   }
 }
 
+// 自定义字号
+export function useCustomFontSize(resumeType: string) {
+  const cacheKey = MARKDOWN_FONT_SIZE + '-' + resumeType
+  const fontSizeOptions = Array.from({ length: 11 }, (_, i) => {
+    const px = 10 + i
+    return { value: `${px}px`, label: `${px}px` }
+  })
+  const fontSize = ref(get(cacheKey) ? (get(cacheKey) as string) : '14px')
+
+  function setFontSize(size: string | null, first?: boolean) {
+    let style = query(cacheKey)
+    const isAppend = style
+    if (!style) {
+      style = createStyle()
+      style.setAttribute(cacheKey, 'true')
+    }
+    // 以 14px 为基准按比例缩放，避免模板里标题的显式 px 值覆盖掉继承
+    const base = parseInt(size || '14') || 14
+    const r = base / 14
+    style.textContent = `
+      .jufe { font-size: ${base}px !important; }
+      .jufe h1 { font-size: ${(25 * r).toFixed(1)}px !important; }
+      .jufe h2 { font-size: ${(18 * r).toFixed(1)}px !important; }
+      .jufe h3 { font-size: ${(17 * r).toFixed(1)}px !important; }
+      .jufe h4 { font-size: ${(15 * r).toFixed(1)}px !important; }
+      .jufe h5 { font-size: ${(13 * r).toFixed(1)}px !important; }
+      .jufe h6 { font-size: ${(12 * r).toFixed(1)}px !important; }
+    `
+    !isAppend && document.head.appendChild(style)
+    set(cacheKey, size)
+    const renderCV = queryRenderCV()
+    ensureEmptyPreWhiteSpace(renderCV)
+    !first && splitPage(renderCV)
+  }
+
+  onActivated(() => setFontSize(fontSize.value, true))
+
+  return {
+    fontSizeOptions,
+    fontSize,
+    setFontSize
+  }
+}
+
 /* 一键重置 */
 export function restResumeContent(resumeType: string) {
   localStorage.removeItem(`${CUSTOM_CSS_STYLE}-${resumeType}`)
   localStorage.removeItem(`${CUSTOM_MARKDOWN_PRIMARY_COLOR}-${resumeType}`)
   localStorage.removeItem(`${CUSTOM_MARKDOWN_PRIMARY_BG_COLOR}-${resumeType}`)
   localStorage.removeItem(`${MARKDOWN_FONT}-${resumeType}`)
+  localStorage.removeItem(`${MARKDOWN_FONT_SIZE}-${resumeType}`)
   localStorage.removeItem(`${AUTO_ONE_PAGE}-${resumeType}`)
   localStorage.removeItem(`${ADJUST_RESUME_MARGIN_TOP}-${resumeType}`)
   localStorage.removeItem(`${LINE_HEIGHT}-${resumeType}`)

@@ -10,6 +10,7 @@ import {
   useAvatar,
   usePrimaryBGColor,
   useCustomFont,
+  useCustomFontSize,
   useCustomCSS,
   usePrimaryColor,
   useAdjust,
@@ -26,6 +27,7 @@ const { resumeType } = useResumeType()
 const { cssDialog, cssText, toggleDialog, setStyle, removeStyle } = useCustomCSS(resumeType.value)
 const { color, setColor } = usePrimaryColor(resumeType.value)
 const { fontOptions, font, setFont } = useCustomFont(resumeType.value)
+const { fontSizeOptions, fontSize, setFontSize } = useCustomFontSize(resumeType.value)
 const { setAvatar } = useAvatar(emits)
 const { primaryColor, setPrimaryColor } = usePrimaryBGColor(resumeType.value)
 const { adjustMargin, visible, confirmAdjustment, properties } = useAdjust(resumeType.value)
@@ -95,6 +97,22 @@ const { isDark } = useThemeConfig()
         >
           <el-option
             v-for="item in fontOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-tooltip>
+      <el-tooltip content="字号设置" effect="light">
+        <el-select
+          v-model="fontSize"
+          class="operator-item font-size-select"
+          @change="setFontSize"
+          placement="bottom"
+          size="small"
+        >
+          <el-option
+            v-for="item in fontSizeOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
